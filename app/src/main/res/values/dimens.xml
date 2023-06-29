@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_tv_view_holder">20sp</dimen>
+    <dimen name="margin_parent_default">8dp</dimen>
+    <dimen name="margin_between_elements_normal">4dp</dimen>
+</resources>
