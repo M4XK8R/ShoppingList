@@ -6,7 +6,6 @@
     android:layout_marginStart="@dimen/margin_parent_default"
     android:layout_marginTop="@dimen/margin_parent_default"
     android:layout_marginEnd="@dimen/margin_parent_default"
-    android:layout_marginBottom="@dimen/margin_between_elements_normal"
     app:cardCornerRadius="6dp"
     app:cardElevation="1dp"
     app:cardUseCompatPadding="true">
