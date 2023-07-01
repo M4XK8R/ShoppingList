@@ -2,38 +2,20 @@ package com.example.shoppinglist.presentation
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.example.shoppinglist.domain.ShopItem
-import java.lang.RuntimeException
 
-class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
-    var shopList = listOf<ShopItem>()
-        set(value) {
-            val callback = ShopListDiffCallback(shopList, value)
-            val diffResult = DiffUtil.calculateDiff(callback)
-            diffResult.dispatchUpdatesTo(this)
-            field = value
-        }
+class ShopListAdapter :
+    androidx.recyclerview.widget.ListAdapter<ShopItem, ShopItemViewHolder>(
+        ShopItemDiffCallback()
+    ) {
+
     private var count = 0
 
-    var onShopItemLongClickListener: OnShopItemLongClickListener? = null
+//    var onShopItemLongClickListener: OnShopItemLongClickListener? = null
     var onShopItemLongClickListenerLambda: ((ShopItem) -> Unit)? = null
     var onShopItemClickListenerLambda: ((ShopItem) -> Unit)? = null
-
-    class ShopItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvName: TextView
-        val tvCount: TextView
-
-        init {
-            tvName = view.findViewById(R.id.tvName)
-            tvCount = view.findViewById(R.id.tvCount)
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopItemViewHolder {
 //        Log.d("ShopListAdapter", "onCreateViewHolder ${++count}")
@@ -46,11 +28,9 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         return ShopItemViewHolder(view)
     }
 
-    override fun getItemCount(): Int = shopList.size
-
     override fun onBindViewHolder(holder: ShopItemViewHolder, position: Int) {
         Log.d("ShopListAdapter", "onBindViewHolder ${++count}")
-        val shopItem = shopList[position]
+        val shopItem = getItem(position)
         holder.apply {
             tvName.text = shopItem.name
             tvCount.text = shopItem.count.toString()
@@ -67,7 +47,7 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
     }
 
     override fun getItemViewType(position: Int): Int {
-        val shopItem = shopList[position]
+        val shopItem = getItem(position)
         return if (shopItem.isEnabled) VIEW_TYPE_ENABLED else VIEW_TYPE_DISABLED
     }
 
@@ -78,7 +58,8 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         const val VH_MAX_POOL_SIZE = 10
     }
 
-    interface OnShopItemLongClickListener {
+   /* interface OnShopItemLongClickListener {
         fun onShopItemLongClick(shopItem: ShopItem)
-    }
+        }
+   */
 }
