@@ -1,6 +1,7 @@
 package com.example.shoppinglist.presentation
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
@@ -10,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
     private lateinit var viewModel: MainViewModel
     private lateinit var shopListAdapter: ShopListAdapter
     private var shopItemContainerLand: FragmentContainerView? = null
-    private val isOnePaneMode get()= shopItemContainerLand == null
+    private val isOnePaneMode get() = shopItemContainerLand == null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,16 +49,17 @@ class MainActivity : AppCompatActivity() {
             recycledViewPool.setMaxRecycledViews(
                 ShopListAdapter.VIEW_TYPE_DISABLED, ShopListAdapter.VH_MAX_POOL_SIZE
             )
-        }/*  shopListAdapter.onShopItemLongClickListener =
-              object : ShopListAdapter.OnShopItemLongClickListener {
-                  override fun onShopItemLongClick(shopItem: ShopItem) {
-                      viewModel.changeIsEnableState(shopItem)
-                  }
-              }*/
+        }
         setUpLongClickListener()
         setUpClickListener()
         setUpSwipeListener(rvShopList)
     }
+
+    override fun onEditingFinished() {
+        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+        supportFragmentManager.popBackStack()
+    }
+
 
     /**
      * Private functions section
