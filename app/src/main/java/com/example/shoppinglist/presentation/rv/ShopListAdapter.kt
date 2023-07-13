@@ -1,4 +1,4 @@
-package com.example.shoppinglist.presentation
+package com.example.shoppinglist.presentation.rv
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -29,8 +29,8 @@ class ShopListAdapter :
     }
 
     override fun onBindViewHolder(holder: ShopItemViewHolder, position: Int) {
-        Log.d("ShopListAdapter", "onBindViewHolder ${++count}")
         val shopItem = getItem(position)
+
         holder.apply {
             tvName.text = shopItem.name
             tvCount.text = shopItem.count.toString()
